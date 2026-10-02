@@ -1,5 +1,7 @@
 # TaskFlow
 
+agrega el badge de CI bajo el título
+
 Gestor de tareas en Python · Proyecto integrador del curso **DevOps & Project Management**.
 
 ## Equipo
