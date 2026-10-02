@@ -40,8 +40,32 @@ class GestorTareas:
             return [t for t in self._tareas if not t.completada]
         return list(self._tareas)
 
+    def eliminar(self, tarea_id):
+        tarea = self.buscar(tarea_id)   # lanza KeyError si no existe
+        self._tareas.remove(tarea)
+        return tarea
+    
     def buscar(self, tarea_id):
         for tarea in self._tareas:
             if tarea.id == tarea_id:
                 return tarea
         raise KeyError(f"No existe la tarea {tarea_id}")
+    
+def test_eliminar_quita_la_tarea():
+    gestor = GestorTareas()
+    gestor.agregar("A")
+    gestor.agregar("B")
+    gestor.eliminar(1)
+    assert [t.id for t in gestor.listar()] == [2]
+
+
+def test_eliminar_no_reutiliza_ids():
+    gestor = GestorTareas()
+    gestor.agregar("A")
+    gestor.eliminar(1)
+    assert gestor.agregar("B").id == 2
+
+
+def test_eliminar_inexistente_lanza_error():
+    with pytest.raises(KeyError):
+        GestorTareas().eliminar(42)
